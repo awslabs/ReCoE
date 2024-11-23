@@ -5,20 +5,89 @@ Each subset contains questions that require the model to reason over interconnec
 
 Please refer to [our paper](https://aclanthology.org/2024.findings-acl.743.pdf) for more details.
 
-<img src="figs/edit-propagate.pdf" width="400">
+<img src="figs/edit-propagate.png" width="360">
 
 
 ## Dataset Structure
 The dataset is organized into six sub-directories, each corresponding to one of the reasoning schemes. 
 
-- `data/superlative`:
-- `data/comparative`:
-- `data/sorting`:
-- `data/counting`:
-- `data/aggregation`:
-- `data/subtraction`:
+- `data/superlative`
+- `data/comparative`
+- `data/sorting`
+- `data/counting`
+- `data/aggregation`
+- `data/subtraction`
 
 Each sub-directory contains a JSON file that includes questions, original answers (aliases) along with their supporting facts (identified by the keys `choice_1_facts` and `choice_1_counterfactuals`), as well as counterfactual answers (aliases) accompanied by their respective supporting counterfactuals (identified by the keys `choice_2_facts` and `choice_2_counterfactuals`).
+
+An example from the `Superlative` category is shown below:
+```json
+{
+  "question": "Who is the last celebrity Brody Jenner had a romantic relationship with?",
+  "answer": "Lauren Conrad",
+  "counterfactual_answer": "Heidi Montag",
+  "facts_per_choice": {
+    "choice_1_facts": [
+      {
+        "fact": "Lauren Conrad and Brody Jenner briefly dated in 2006.",
+        "links": [
+          "https://en.wikipedia.org/wiki/Lauren_Conrad"
+        ],
+        "atomic_facts": [
+          "Lauren Conrad and Brody Jenner's dating was brief.",
+          "Lauren Conrad and Brody Jenner's brief dating was in 2006."
+        ],
+        "atomic_triples": [
+          "(Lauren Conrad and Brody Jenner's dating; was; brief)",
+          "(Lauren Conrad and Brody Jenner's brief dating; was in; 2006)"
+        ]
+      }
+    ],
+    "choice_2_facts": [
+      {
+        "fact": "Heidi Montag was never romantically involved with Brody Jenner.",
+        "links": [
+          "https://en.wikipedia.org/wiki/Heidi_Montag"
+        ],
+        "atomic_facts": [
+          "Heidi Montag was never romantically involved with Brody Jenner."
+        ],
+        "atomic_triples": [
+          "(Heidi Montag; was never romantically involved with; Brody Jenner)"
+        ]
+      }
+    ]
+  },
+  "counterfactuals_per_choice": {
+    "choice_1_counterfactuals": [
+      {
+        "fact": "Lauren Conrad was never romantically involved with Brody Jenner.",
+        "atomic_facts": [
+          "Lauren Conrad was never romantically involved with Brody Jenner."
+        ],
+        "atomic_triples": [
+          "(Lauren Conrad; was never romantically involved with; Brody Jenner)"
+        ]
+      }
+    ],
+    "choice_2_counterfactuals": [
+      {
+        "fact": "Heidi Montag and Brody Jenner briefly dated in 2006.",
+        "atomic_facts": [
+          "Heidi Montag and Brody Jenner's dating was brief.",
+          "Heidi Montag and Brody Jenner's brief dating was in 2006."
+        ],
+        "atomic_triples": [
+          "(Heidi Montag and Brody Jenner's dating; was; brief)",
+          "(Heidi Montag and Brody Jenner's brief dating; was in; 2006)"
+        ]
+      }
+    ]
+  },
+  "answer_alias": ["Lauren K. Conrad", "Lauren Katherine Conrad", "L.C."],
+  "counterfactual_answer_alias": ["Heidi Pratt", "Heidi Blair Montag", "Heidi B. Montag"]
+}
+```
 
 In the `sorting` subset, both the original and counterfactual answers consist of the same set of entities in different orders. The supporting facts correspond to each entity.
 
